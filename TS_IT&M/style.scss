@@ -1,0 +1,475 @@
+$font: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+$font-size: 16px;
+$background-color: #FFFFFF;
+$content-width: 1000px;
+$heading-color: #767a84;
+$navtop-background-color: #394557;
+$default-button-color: #407cb9;
+* {
+	box-sizing: border-box;
+	font-family: $font;
+    font-size: $font-size;
+}
+body {
+    background-color: $background-color;
+	margin: 0;
+}
+.navtop {
+	background-color: $navtop-background-color;
+	height: 60px;
+	width: 100%;
+	border: 0;
+	div {
+		display: flex;
+		margin: 0 auto;
+		width: $content-width;
+		height: 100%;
+		h1, a {
+			display: inline-flex;
+			align-items: center;
+		}
+		h1 {
+			flex: 1;
+			padding: 0;
+			margin: 0;
+			color: mix(#fff, $navtop-background-color, 90);
+			a {
+				font-weight: 600;
+				font-size: 18px;
+				padding: 0;
+			}
+		}
+		a {
+			padding: 0 20px;
+			text-decoration: none;
+			color: mix(#fff, $navtop-background-color, 70);
+			font-weight: bold;
+			i {
+				padding: 2px 8px 0 0;
+			}
+			&:hover {
+				color: mix(#fff, $navtop-background-color, 90);
+			}
+		}
+	}
+}
+.content {
+	width: $content-width;
+	margin: 0 auto;
+	h2 {
+		margin: 0;
+		padding: 25px 0;
+		font-size: 22px;
+		font-weight: 600;
+		border-bottom: 1px solid mix(#000, $background-color, 8);
+		color: $heading-color;
+	}
+}
+.btns {
+	display: flex;
+	.btn {
+		display: inline-block;
+		text-decoration: none;
+		background-color: $default-button-color;
+		font-weight: bold;
+		font-size: 14px;
+		border-radius: 4px;
+		color: #FFFFFF;
+		padding: 10px 15px;
+		margin: 15px 10px 15px 0;
+		&:hover {
+			background-color: darken($default-button-color, 5);
+		}
+		&.red {
+			background-color: #b63838;
+			&:hover {
+				background-color: darken(#b63838, 5);
+			}
+		}
+	}
+}
+.home {
+	.tickets-links {
+		display: flex;
+		justify-content: space-between;
+		flex-flow: nowrap;
+		padding-top: 30px;
+		a {
+			display: flex;
+			flex-flow: column;
+			position: relative;
+			text-decoration: none;
+			justify-content: center;
+			align-items: center;
+			width: 300px;
+			height: 200px;
+			i {
+				position: absolute;
+				z-index: 0;
+			}
+			.title {
+				color: #fff;
+				z-index: 1;
+				font-size: 14px;
+				font-weight: 800;
+				text-transform: uppercase;
+			}
+			.num {
+				color: #fff;
+				z-index: 1;
+				font-size: 40px;
+				font-weight: bold;
+				opacity: 0.8;
+			}
+			&.open {
+				background-color: #aeaeae;
+				i {
+					color: lighten(#aeaeae, 3);
+				}
+				&:hover {
+					background-color: darken(#aeaeae, 1);
+				}
+			}
+			&.resolved {
+				background-color: #3fa864;
+				i {
+					color: lighten(#3fa864, 3);
+				}
+				&:hover {
+					background-color: darken(#3fa864, 1);
+				}
+			}
+			&.closed {
+				background-color: #a83f3f;
+				i {
+					color: lighten(#a83f3f, 3);
+				}
+				&:hover {
+					background-color: darken(#a83f3f, 1);
+				}
+			}
+		}
+	}
+	.new {
+		padding-top: 60px;
+	}
+}
+.tickets, .home {
+	.tickets-list {
+		display: flex;
+		flex-flow: column;
+		.ticket {
+			padding: 15px 0;
+			width: 100%;
+			border-bottom: 1px solid mix(#000, $background-color, 8);
+			display: flex;
+			text-decoration: none;
+			.con {
+				display: flex;
+				justify-content: center;
+				flex-flow: column;
+			}
+			.con2 {
+				display: flex;
+				flex-flow: column;
+				flex-grow: 1;
+				align-items: flex-end;
+			}
+			i {
+				text-align: center;
+				width: 80px;
+				color: mix(#000, $background-color, 30);
+			}
+			.title {
+				font-weight: 600;
+				color: darken($background-color, 60);
+			}
+			.msg {
+				overflow: hidden;
+			    white-space: nowrap;
+			    text-overflow: ellipsis;
+				max-width: 400px;
+				color: mix(#000, $background-color, 40);
+				font-size: 14px;
+			}
+			.created {
+				flex-grow: 1;
+				align-items: flex-end;
+				color: mix(#000, $background-color, 40);
+				font-size: 14px;
+			}
+			.priority {
+				font-weight: bold;
+				font-size: 12px;
+				text-transform: capitalize;
+				&.low {
+					color: #38b673;
+				}
+				&.medium {
+					color: #dea200;
+				}
+				&.high {
+					color: #b63838;
+				}
+			}
+			&:last-child {
+				border-bottom: 0;
+			}
+			&:hover {
+				background-color: mix(#000, $background-color, 1);
+			}
+		}
+	}
+	form {
+		display: flex;
+		padding: 20px 0;
+		justify-content: space-between;
+		select, input {
+			border: 1px solid mix(#000, $background-color, 20);
+			padding: 6px 8px;
+			margin-left: 10px;
+		}
+		select {
+			margin-right: 15px;
+		}
+	}
+	.pagination {
+		display: flex;
+		justify-content: flex-end;
+		padding: 20px 0 40px 0;
+		a {
+			display: flex;
+			text-decoration: none;
+			padding: 5px 10px;
+			margin-left: 10px;
+			font-weight: 600;
+			background-color: mix(#000, $background-color, 5);
+			color: mix(#000, $background-color, 40);
+			&:hover {
+				background-color: mix(#000, $background-color, 8);
+			}
+		}
+	}
+}
+.view {
+	h2 {
+		span {
+			font-weight: 700;
+		}
+		.open {
+			color: #aeaeae;
+		}
+		.resolved {
+			color: #38b673;
+		}
+		.closed {
+			color: #b63838;
+		}
+	}
+	.ticket {
+		padding: 20px 0;
+		.priority {
+			font-weight: bold;
+			text-transform: capitalize;
+			font-size: 14px;
+			&.low {
+				color: #38b673;
+			}
+			&.medium {
+				color: #dea200;
+			}
+			&.high {
+				color: #b63838;
+			}
+		}
+		.sep {
+			padding: 0 5px;
+		}
+		.category {
+			color: mix(#000, $background-color, 50);
+		}
+		.created {
+			display: flex;
+			color: mix(#000, $background-color, 50);
+			justify-content: flex-end;
+			flex-grow: 1;
+		}
+		div {
+			display: flex;
+		}
+	}
+	.uploads {
+		display: flex;
+		a {
+			text-decoration: none;
+			margin-right: 10px;
+			&:hover {
+				opacity: 0.9;
+			}
+		}
+	}
+	.comments {
+		margin-top: 15px;
+		border-top: 1px solid mix(#000, $background-color, 8);
+		padding: 25px 0;
+		.comment {
+			display: flex;
+			padding-bottom: 5px;
+			div {
+				display: flex;
+				align-items: flex-start;
+				justify-content: center;
+				width: 70px;
+				color: mix(#000, $background-color, 10);
+				transform: scaleX(-1);
+			}
+			p {
+				margin: 0 0 20px 0;
+				.header {
+					display: flex;
+					padding-bottom: 5px;
+					.name, .date {
+						font-size: 14px;
+						color: mix(#000, $background-color, 50);
+					}
+					.name {
+						font-weight: 600;
+						padding-right: 10px;
+						color: #0058ba;
+						&.is-admin {
+							color: #b94040;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.update, .view {
+	form {
+		padding: 15px 0;
+		display: flex;
+		flex-flow: column;
+		width: 400px;
+		.wrap {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			label, select {
+				width: 47%;
+				margin-right: 0;
+				&:first-child {
+					padding-right: 15px;
+				}
+			}
+		}
+		label {
+			display: inline-flex;
+			width: 100%;
+			padding: 10px 0;
+			margin-right: 25px;
+		}
+		input, textarea, select {
+			padding: 10px;
+			width: 100%;
+			margin-right: 25px;
+			margin-bottom: 15px;
+			border: 1px solid mix(#000, $background-color, 20);
+		}
+		textarea {
+			height: 200px;
+		}
+		input[type="submit"] {
+			display: block;
+			background-color: $default-button-color;
+			border: 0;
+			font-weight: bold;
+			font-size: 14px;
+			color: #FFFFFF;
+			cursor: pointer;
+			width: 200px;
+			margin-top: 15px;
+			border-radius: 4px;
+			&:hover {
+				background-color: darken($default-button-color, 5);
+			}
+		}
+	}
+}
+.login {
+	display: flex;
+	padding-top: 40px;
+	.con {
+		flex-basis: 50%;
+		&:last-child {
+			padding-left: 50px;
+			border-left: 1px solid mix(#000, $background-color, 5);
+		}
+	}
+	h2 {
+		border: 0;
+	}
+}
+@media screen and (max-width: $content-width) {
+	.navtop {
+		height: auto;
+
+		div {
+			flex-flow:wrap;
+			width: 100%;
+			h1 {
+				display: block;
+				flex-basis: 100%;
+				padding: 15px 10px;
+			}
+			> a {
+				padding: 10px;
+				font-size: 14px;
+				font-weight: 600;
+				flex-basis: 100%;
+				background-color: darken($navtop-background-color, 10);
+				border-bottom: 1px solid darken($navtop-background-color, 13);
+			}
+		}
+	}
+	.content {
+		padding: 10px;
+		width: 100%;
+	}
+	.responsive-width-100 {
+		width: 100%;
+		max-width: 100%;
+	}
+	.responsive-hidden {
+		display: none;
+	}
+	.tickets, .home, .login {
+		form {
+			width: 100%;
+			flex-flow: column;
+			select, input {
+				margin: 10px 0;
+			}
+			div {
+				display: flex;
+				flex-flow: column;
+			}
+		}
+		.tickets-links {
+			flex-flow: column;
+			a {
+				margin-bottom: 10px;
+			}
+		}
+	}
+	.login {
+		flex-flow: column;
+		.con {
+			flex-basis: 100%;
+			&:last-child {
+				padding-left: 0;
+				border-left: none;
+			}
+		}
+	}
+}
