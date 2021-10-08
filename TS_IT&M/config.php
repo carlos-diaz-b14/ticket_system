@@ -4,7 +4,7 @@ define('db_host', '127.0.0.1');
 
 define('db_user', 'mawasolu_login2');
 
-define('db_pass', 'Hormiga21');
+define('db_pass', 'xxxxx');
 
 define('db_name', 'mawasolu_phpticket_advanced');
 
