@@ -35,11 +35,6 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `account_id` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-INSERT INTO `tickets` (`id`, `title`, `msg`, `email`, `created`, `status`, `priority`, `category_id`, `private`, `account_id`) VALUES
-(1, 'How do I navigate to the website?', 'Hello, I''m having trouble and need your help!', 'test@codeshack.io', '2020-06-10 13:06:17', 'open', 'low', 1, 0, 0),
-(2, 'Website issue', 'I''m having issues running the website on my laptop, can you help?', 'test@codeshack.io', '2020-06-10 13:07:40', 'resolved', 'medium', 1, 0, 0),
-(3, 'Responsive design issue', 'I have noticed on mobile devices the website does not work correctly, will you guys fix this problem?', 'test@codeshack.io', '2020-06-10 14:30:33', 'open', 'low', 1, 0, 0),
-(4, 'Navigation menu not aligned', 'When I browser the website on a mobile device I have noticed the menu is not aligned, just letting you guys know.', 'test@codeshack.io', '2020-06-16 15:47:20', 'closed', 'high', 1, 0, 0);
 
 CREATE TABLE IF NOT EXISTS `tickets_comments` (
 `id` int(11) NOT NULL,
