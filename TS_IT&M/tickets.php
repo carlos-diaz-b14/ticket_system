@@ -1,19 +1,19 @@
 <?php
 include 'functions.php';
-// Connect to MySQL using the below function
+
 $pdo = pdo_connect_mysql();
-// Fetch all the category names from the categories MySQL table
+
 $categories = $pdo->query('SELECT * FROM categories')->fetchAll(PDO::FETCH_ASSOC);
-// MySQL query that selects all the tickets from the databse
+
 $status = isset($_GET['status']) ? $_GET['status'] : 'all';
 $category = isset($_GET['category']) ? $_GET['category'] : 'all';
 $priority = isset($_GET['priority']) ? $_GET['priority'] : 'all';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-// The current pagination page
+
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-// The maximum amount of tickets per page
+
 $num_tickets_per_page = num_tickets_per_page;
-// Build the SQL string
+
 $sql = '';
 $sql .= $status != 'all' ? ' status = :status AND' : '';
 $sql .= $category != 'all' ? ' category_id = :category AND' : '';
@@ -21,9 +21,9 @@ $sql .= $priority != 'all' ? ' priority = :priority AND' : '';
 $sql .= $search ? ' title LIKE :search AND' : '';
 $sql .= isset($_SESSION['account_loggedin']) && $_SESSION['account_role'] == 'Admin' ? '' : ' private = 0 AND';
 $sql = !empty($sql) ? rtrim('WHERE ' . $sql, 'AND') : '';
-// Fetch the tickets from the database
+
 $stmt = $pdo->prepare('SELECT * FROM tickets ' . $sql . ' ORDER BY created DESC LIMIT :current_page, :tickets_per_page');
-// Bind params
+
 if ($status != 'all') {
 	$stmt->bindParam(':status', $status);
 }
@@ -48,9 +48,9 @@ if (isset($_SESSION['account_loggedin'])) {
 	$stmt->execute([ $_SESSION['account_id'] ]);
 	$account_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-// Below queries will get the total number of tickets
+
 if (isset($_SESSION['account_loggedin']) && $_SESSION['account_role'] == 'Admin') {
-	// Only admins can view public and private tickets
+	
 	$num_tickets = $pdo->query('SELECT COUNT(*) FROM tickets')->fetchColumn();
 	$num_open_tickets = $pdo->query('SELECT COUNT(*) FROM tickets WHERE status = "open"')->fetchColumn();
 	$num_closed_tickets = $pdo->query('SELECT COUNT(*) FROM tickets WHERE status = "closed"')->fetchColumn();
