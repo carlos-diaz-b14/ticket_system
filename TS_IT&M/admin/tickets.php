@@ -1,11 +1,11 @@
 <?php
 include 'main.php';
 $status_sql = '';
-// Check if the status param is specified in the URL
+
 if (isset($_GET['status']) && in_array($_GET['status'], ['open', 'closed', 'resolved'])) {
     $status_sql = 'WHERE t.status = "' . $_GET['status'] . '"';
 }
-// Retrieve all tickets along with the associated categories and order by the created column
+
 $stmt = $pdo->prepare('SELECT t.*, (SELECT count(*) FROM tickets_comments tc WHERE t.id = tc.ticket_id) AS msgs, c.name AS category FROM tickets t LEFT JOIN categories c ON c.id = t.category_id ' . $status_sql . ' ORDER BY t.created DESC');
 $stmt->execute();
 $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
