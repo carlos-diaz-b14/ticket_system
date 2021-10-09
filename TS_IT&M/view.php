@@ -1,49 +1,49 @@
 <?php
 include 'functions.php';
-// Connect to MySQL using the below function
+
 $pdo = pdo_connect_mysql();
-// Check if the ID param in the URL exists
+
 if (!isset($_GET['id'])) {
     exit('No ID specified!');
 }
-// MySQL query that selects the ticket by the ID column, using the ID GET request variable
+
 $stmt = $pdo->prepare('SELECT t.*, c.name AS category FROM tickets t LEFT JOIN categories c ON c.id = t.category_id WHERE t.id = ?');
 $stmt->execute([ $_GET['id'] ]);
 $ticket = $stmt->fetch(PDO::FETCH_ASSOC);
-// Retrieve ticket uplaods from the database
+
 $stmt = $pdo->prepare('SELECT * FROM tickets_uploads WHERE ticket_id = ?');
 $stmt->execute([ $_GET['id'] ]);
 $ticket_uploads = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// Check if ticket exists
+
 if (!$ticket) {
     exit('Invalid ticket ID!');
 }
-// Check if private
+
 if ($ticket['private'] && (!isset($_GET['code']) || $_GET['code'] != md5($ticket['id'] . $ticket['email']))) {
     exit('This is a private ticket!');
 }
-// If the ticket is private, append the code to the URL
+
 $private_url = $ticket['private'] ? '&code=' . md5($ticket['id'] . $ticket['email']) : '';
-// Update status
+
 if (isset($_GET['status'], $_SESSION['account_loggedin']) && $_SESSION['account_role'] == 'Admin' && in_array($_GET['status'], ['open', 'closed', 'resolved'])) {
     $stmt = $pdo->prepare('UPDATE tickets SET status = ? WHERE id = ?');
     $stmt->execute([ $_GET['status'], $_GET['id'] ]);
-    // Send updated ticket email to user
+
     send_ticket_email($ticket['email'], $ticket['id'], $ticket['title'], $ticket['msg'], $ticket['priority'], $ticket['category'], $ticket['private'], $_GET['status'], 'update');
     header('Location: view.php?id=' . $_GET['id'] . $private_url);
     exit;
 }
-// Check if the comment form has been submitted
+
 if (isset($_POST['msg'], $_SESSION['account_loggedin']) && !empty($_POST['msg'])) {
-    // Insert the new comment into the "tickets_comments" table
+ 
     $stmt = $pdo->prepare('INSERT INTO tickets_comments (ticket_id, msg, account_id) VALUES (?, ?, ?)');
     $stmt->execute([ $_GET['id'], $_POST['msg'], $_SESSION['account_id'] ]);
-    // Send updated ticket email to user
+   
     send_ticket_email($ticket['email'], $ticket['id'], $ticket['title'], $ticket['msg'], $ticket['priority'], $ticket['category'], $ticket['private'], $ticket['status'], 'comment');
     header('Location: view.php?id=' . $_GET['id'] . $private_url);
     exit;
 }
-// Retrieve the ticket comments from the database
+
 $stmt = $pdo->prepare('SELECT tc.*, a.name, a.role FROM tickets_comments tc LEFT JOIN accounts a ON a.id = tc.account_id WHERE tc.ticket_id = ? ORDER BY tc.created');
 $stmt->execute([ $_GET['id'] ]);
 $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
