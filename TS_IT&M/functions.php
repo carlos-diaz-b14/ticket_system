@@ -13,23 +13,23 @@ function pdo_connect_mysql() {
     }
     return $pdo;
 }
-// Send ticket email function
+
 function send_ticket_email($email, $id, $title, $msg, $priority, $category, $private, $status, $type = 'create') {
-    // Ticket create subject
+  
 	$subject = 'Your ticket has been created';
-    // Ticket update subject
+
     $subject = $type == 'update' ? 'Your ticket has been updated' : $subject;
-    // Ticket comment subject
+
     $subject = $type == 'comment' ? 'Someone has commented on your ticket' : $subject;
-    // Mail headers
+
 	$headers = 'From: ' . mail_from . "\r\n" . 'Reply-To: ' . mail_from . "\r\n" . 'Return-Path: ' . mail_from . "\r\n" . 'X-Mailer: PHP/' . phpversion() . "\r\n" . 'MIME-Version: 1.0' . "\r\n" . 'Content-Type: text/html; charset=UTF-8' . "\r\n";
-    // Ticket URL
+
     $link = view_ticket_link . '?id=' . $id . '&code=' . md5($id . $email);
-    // Include the ticket email template as a string
+  
     ob_start();
     include 'ticket-email-template.php';
     $ticket_email_template = ob_get_clean();
-    // Send ticket email
+  
 	mail($email, $subject, $ticket_email_template, $headers);
 }
 // Template header
