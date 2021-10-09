@@ -1,22 +1,22 @@
 <?php
 include 'main.php';
-// Retrieve today's tickets
+
 $stmt = $pdo->prepare('SELECT t.*, (SELECT count(*) FROM tickets_comments tc WHERE t.id = tc.ticket_id) AS msgs, c.name AS category FROM tickets t LEFT JOIN categories c ON c.id = t.category_id WHERE cast(t.created as DATE) = cast(now() as DATE) ORDER BY t.priority DESC, t.created DESC');
 $stmt->execute();
 $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// Retrieve all open tickets
+
 $stmt = $pdo->prepare('SELECT t.*, (SELECT count(*) FROM tickets_comments tc WHERE t.id = tc.ticket_id) AS msgs, c.name AS category FROM tickets t LEFT JOIN categories c ON c.id = t.category_id WHERE t.status = "open" ORDER BY t.priority DESC, t.created DESC');
 $stmt->execute();
 $open_tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// Retrieve the total number of tickets
+
 $stmt = $pdo->prepare('SELECT COUNT(*) AS total FROM tickets');
 $stmt->execute();
 $tickets_total = $stmt->fetchColumn();
-// Retrieve the total number of open tickets
+
 $stmt = $pdo->prepare('SELECT COUNT(*) AS total FROM tickets WHERE status = "open"');
 $stmt->execute();
 $open_tickets_total = $stmt->fetchColumn();
-// Retrieve the total number of resolved tickets
+
 $stmt = $pdo->prepare('SELECT COUNT(*) AS total FROM tickets WHERE status = "resolved"');
 $stmt->execute();
 $resolved_tickets_total = $stmt->fetchColumn();
