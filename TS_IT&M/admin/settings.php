@@ -1,17 +1,17 @@
 <?php
 include 'main.php';
-// Configuration file
+
 $file = '../config.php';
-// Open the configuration file for reading
+
 $handle = fopen($file, 'r') or exit('Unable to read configuration file! Make sure the file is readable!');
 $contents = fread($handle, filesize($file));
 fclose($handle);
-// Format key function
+
 function format_key($key) {
     $key = str_replace(['_', 'url', 'ipn', 'db ', 'paypal'], [' ', 'URL', 'IPN', 'Database ', 'PayPal'], strtolower($key));
     return ucwords($key);
 }
-// Format HTML output function
+
 function format_var_html($key, $value) {
     $html = '';
     $type = 'text';
@@ -26,10 +26,10 @@ function format_var_html($key, $value) {
     $html .= '<input type="' . $type . '" name="' . $key . '" id="' . $key . '" value="' . $value . '" placeholder="' . format_key($key) . '"' . $checked . '>';
     return $html;
 }
-// Get all the defined variable keys and values
+
 preg_match_all('/define\(\'(.*?)\', ?(.*?)\)/', $contents, $matches);
 if (!empty($_POST)) {
-    // Update the configuration file with the new keys and values
+
     foreach ($_POST as $k => $v) {
         $v = in_array(strtolower($v), ['true', 'false']) ? strtolower($v) : (is_numeric($v) ? $v : '\'' . $v . '\'');
         $contents = preg_replace('/define\(\'' . $k . '\'\, ?(.*?)\)/s', 'define(\'' . $k . '\',' . $v . ')', $contents);
