@@ -1,6 +1,6 @@
 <?php
 include 'main.php';
-// Default input account values
+
 $account = [
     'name' => '',
     'password' => '',
@@ -8,14 +8,14 @@ $account = [
     'role' => 'Member'
 ];
 if (isset($_GET['id'])) {
-    // Retrieve the account from the database
+  
     $stmt = $pdo->prepare('SELECT * FROM accounts WHERE id = ?');
     $stmt->execute([ $_GET['id'] ]);
     $account = $stmt->fetch(PDO::FETCH_ASSOC);
-    // ID param exists, edit an existing account
+
     $page = 'Edit';
     if (isset($_POST['submit'])) {
-        // Update the account
+      
         $password = $_POST['password'] == $account['password'] ? $_POST['password'] : password_hash($_POST['password'], PASSWORD_DEFAULT);
         $stmt = $pdo->prepare('UPDATE accounts SET name = ?, password = ?, email = ?, role = ? WHERE id = ?');
         $stmt->execute([ $_POST['name'], $password, $_POST['email'], $_POST['role'], $_GET['id'] ]);
@@ -23,14 +23,14 @@ if (isset($_GET['id'])) {
         exit;
     }
     if (isset($_POST['delete'])) {
-        // Delete the account
+     
         $stmt = $pdo->prepare('DELETE FROM accounts WHERE id = ?');
         $stmt->execute([ $_GET['id'] ]);
         header('Location: accounts.php');
         exit;
     }
 } else {
-    // Create a new account
+  
     $page = 'Create';
     if (isset($_POST['submit'])) {
         $stmt = $pdo->prepare('INSERT INTO accounts (name,password,email,role) VALUES (?,?,?,?)');
